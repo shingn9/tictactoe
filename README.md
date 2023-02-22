@@ -1,4 +1,4 @@
-# TicTacToe by @shingn9
+# TicTacToe
 
 Built a TicTacToe game with GUI using relevant tools. 
 
@@ -15,3 +15,6 @@ bash run.sh
 - Gradle Build Tool
 - VSCode IDE
 - Java 17
+
+
+@shingn9
