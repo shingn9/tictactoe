@@ -9,7 +9,7 @@ bash run.sh
 ```
 
 # Tools & Technologies
-- JavaFX
+- JavaFX 17
 - Scene Builder
 - Gradle Build Tool
 - VSCode IDE
