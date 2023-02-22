@@ -1,9 +1,8 @@
 # TicTacToe
-
-Built a TicTacToe game with GUI using relevant tools. 
+Built a TicTacToe game with GUI. 
 
 # How To Use
-Run the following command on your terminal:
+Run the following command to play:
 
 ```
 bash run.sh
@@ -15,6 +14,3 @@ bash run.sh
 - Gradle Build Tool
 - VSCode IDE
 - Java 17
-
-
-@shingn9
