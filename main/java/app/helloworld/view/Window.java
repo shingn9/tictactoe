@@ -14,7 +14,6 @@ import java.util.*;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 import java.net.URL;
-
 import javafx.scene.paint.Color;
 
 public class Window {
@@ -22,7 +21,6 @@ public class Window {
     private final String gameControllerFXML = "/fxml/Game.fxml";
     private final String gameEndControllerFXML = "/fxml/GameEnd.fxml";
     Scene scene;
-    // Controller controller = new GameController();
     // GameEndController gameEndController = new GameEndController();
     Parent p;
     private HashMap<String, Controller> controllersList =  new HashMap<>();
