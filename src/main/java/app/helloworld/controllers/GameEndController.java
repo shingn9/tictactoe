@@ -24,6 +24,7 @@ public class GameEndController implements Controller {
 
     private Pane pane;
     private Scene scene;
+    // private Window window;
 
     HashMap<String, Controller> controllersList =  new HashMap<>(); 
     
