@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.*;
 import javafx.animation.*;
 import javafx.util.Duration;
+import javafx.scene.paint.Color;
 
 import javafx.fxml.FXML;
 import java.util.*;
@@ -14,7 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.Scene;
 
 import java.net.URL;
@@ -66,6 +67,12 @@ public class GameController implements Controller, Initializable {
     @FXML
     private Button switchModeButton;
 
+    @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private Text titleText;
+
     private int playerTurn = 0;
     private int playerWon = 2; // if even == X, odd == O
 
@@ -82,7 +89,8 @@ public class GameController implements Controller, Initializable {
     final String startingColourHex = "-fx-background-color:#33A9BA;";
 
     // dark background
-    final String switchColourHex = "-fx-background-color:#25282b;";
+    // final String switchColourHex = "-fx-background-color:#25282b;";
+    final String switchColourHex = "-fx-background-color:#f57b42;";
 
     private int mode = 0;
     
@@ -139,12 +147,6 @@ public class GameController implements Controller, Initializable {
         }); 
     }
 
-    public void resetButton(Button b) {
-        playerTurn = 0;
-        b.setStyle(startingColourHex);
-        b.setDisable(false);
-        b.setText("");
-    }
 
     public void setPlayerSymbol(Button b) {
         if (playerTurn == 0) {
@@ -230,22 +232,61 @@ public class GameController implements Controller, Initializable {
         XPlayerScore.setText("0");
     }
 
+    public void resetButton(Button b) {
+        playerTurn = 0; // default player
+        if (mode == 0)
+            b.setStyle(startingColourHex);
+        else 
+            b.setStyle(switchColourHex);
+
+        b.setDisable(false);
+        b.setText("");
+    }
+
     @FXML
     void clickButton(Button button, ActionEvent event) {
 
     }
 
+    void setNormalLightMode() {
+        anchorPane.setStyle("-fx-background-color: #ffffff"); // white
+
+        // set the other texts
+        playerXtext.setFill(Color.BLACK);
+        playerOtext.setFill(Color.BLACK);
+        titleText.setFill(Color.BLACK);
+
+        // set the labels colour
+        OPlayerScore.setTextFill(Color.web("#000000"));
+        XPlayerScore.setTextFill(Color.web("#000000"));
+    }
+
+    void setDarkMode() {
+        anchorPane.setStyle("-fx-background-color: #000000"); // black
+        playerXtext.setFill(Color.WHITE);
+        playerOtext.setFill(Color.WHITE);
+        titleText.setFill(Color.WHITE);
+
+        OPlayerScore.setTextFill(Color.web("#ffffff"));
+        XPlayerScore.setTextFill(Color.web("#ffffff"));
+    }
+
+
     @FXML
     void switchMode(ActionEvent event) {
         if (mode == 0) {
+            // switch to dark mode 
+            setDarkMode();
             for (Button b: buttons) {
                 if (!b.isDisabled()) {
                     b.setStyle(switchColourHex);
                 }
             }
-            mode = 1;
+            mode = 1;   
+
         }  else if (mode == 1) {
 
+            setNormalLightMode();
             for (Button b: buttons) {
                 if (!b.isDisabled()) {
                     b.setStyle(startingColourHex);
