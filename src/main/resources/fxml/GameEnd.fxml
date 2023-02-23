@@ -5,15 +5,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.helloworld.controllers.GameEndController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.helloworld.controllers.GameEndController">
    <children>
       <Text fx:id="mainText" layoutX="108.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player X has won!" textAlignment="CENTER">
          <font>
             <Font size="44.0" />
          </font>
       </Text>
-      <Button fx:id="restartButton" layoutX="211.0" layoutY="387.0" mnemonicParsing="false" onAction="#restartGame" prefHeight="41.0" prefWidth="110.0" text="Restart">
+      <Button fx:id="restartButton" layoutX="223.0" layoutY="349.0" mnemonicParsing="false" onAction="#restartGame" prefHeight="41.0" prefWidth="110.0" text="Restart">
          <font>
             <Font size="19.0" />
          </font>
@@ -23,5 +22,10 @@
             <Font size="23.0" />
          </font>
       </Text>
+      <Button fx:id="continueButton" layoutX="201.0" layoutY="412.0" mnemonicParsing="false" onAction="#continueGame" prefHeight="41.0" prefWidth="155.0" text="Continue Game">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

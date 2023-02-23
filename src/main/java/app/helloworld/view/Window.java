@@ -21,13 +21,9 @@ public class Window {
 
     private final String gameControllerFXML = "/fxml/Game.fxml";
     private final String gameEndControllerFXML = "/fxml/GameEnd.fxml";
-    Scene scene;
-    // Controller controller = new GameController();
-    // GameEndController gameEndController = new GameEndController();
-    Parent p;
-    private HashMap<String, Controller> controllersList =  new HashMap<>();
+    private Scene scene;
 
-    private int playerWon = 0;
+    private HashMap<String, Controller> controllersList =  new HashMap<>();
 
     public Window() throws Exception {
         this.scene = new Scene(new Pane());
@@ -36,14 +32,6 @@ public class Window {
         initialiseGameOverScene();
         
         this.scene.setRoot(controllersList.get("game-scene").getPane());
-    }
-
-    public void setPlayerWon(int playerWon) {
-        this.playerWon = playerWon;
-    }
-
-    public int getPlayerWon() {
-        return this.playerWon;
     }
 
     public void initializeScene() throws Exception {
@@ -57,7 +45,6 @@ public class Window {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(gameControllerFXML));
         // Parent content = loader.load(); 
-        // p = content;
         // scene = new Scene(content);
         // Pane pane  = new Pane();
         Pane pane = loader.load(); 
@@ -67,9 +54,9 @@ public class Window {
         controller.setPane(pane);
         // this.scene.setRoot(pane);
         controller.setScene(this.scene);
-        // controller.setWindow(this);
         this.controllersList.put("game-scene", controller);
         controller.setControllersList(this.controllersList);
+
 	}
 
     public void initialiseGameOverScene() throws Exception {
@@ -78,17 +65,12 @@ public class Window {
         loader.setLocation(getClass().getResource(gameEndControllerFXML));
         Pane pane = loader.load(); 
         // this.scene = new Scene(pane);
-
         GameEndController gameEndController = loader.getController();
         gameEndController.setPane(pane);
         gameEndController.setScene(this.scene);
         // // gameEndController.setWindow(this);
         this.controllersList.put("game-end-scene", gameEndController);
         gameEndController.setControllersList(this.controllersList);
-    }
-
-    public Parent getParent() {
-        return p;
     }
 
     public Scene getScene() {

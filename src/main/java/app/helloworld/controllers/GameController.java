@@ -2,21 +2,22 @@ package app.helloworld.controllers;
 import app.helloworld.view.Window;
 
 import javafx.event.ActionEvent;
+import javafx.event.*;
+import javafx.animation.*;
+import javafx.util.Duration;
+
 import javafx.fxml.FXML;
+import java.util.*;
+import javafx.fxml.Initializable;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import java.util.*;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+
 import javafx.scene.Scene;
 
-import javafx.scene.paint.Color; 
-
-import javafx.scene.text.Text;
 import java.net.URL;
-import java.util.ResourceBundle;
 
 public class GameController implements Controller, Initializable {
 
@@ -65,21 +66,27 @@ public class GameController implements Controller, Initializable {
     @FXML
     private Button switchModeButton;
 
-    private Label message;
-
     private int playerTurn = 0;
     private int playerWon = 2; // if even == X, odd == O
-    ArrayList<Button> buttons;
+
+    private int playerXscore = 0;
+    private int playerOscore = 0;
+    
+    private ArrayList<Button> buttons;
     private Pane pane;
 
     private Scene scene;
     private Window window;
-    HashMap<String, Controller> controllersList =  new HashMap<>(); 
+    private HashMap<String, Controller> controllersList =  new HashMap<>(); 
 
     final String startingColourHex = "-fx-background-color:#33A9BA;";
 
+    // dark background
+    final String switchColourHex = "-fx-background-color:#25282b;";
+
+    private int mode = 0;
+    
     public GameController() {
-        this.message = new Label();
     }
 
     public int getPlayerWon() {
@@ -110,25 +117,18 @@ public class GameController implements Controller, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
         buttons = new ArrayList<>(Arrays.asList(B1, B2, B3, B4, B5, B6, B7, B8, B9));
-                buttons.forEach(b -> {
+        buttons.forEach(b -> {
             setUpButton(b);
+            System.out.println("hi");
             b.setFocusTraversable(false);
         });
     }
 
     public void setUpButton(Button b) {
         playerTurn = 0;
-        playerXtext.setStyle("-fx-text-fill: #000000;");
-        playerXtext.setFill(Color.RED);
-        playerXtext.setStyle("-fx-font-size: 24px;");
-
         b.setStyle(startingColourHex);
         b.setOnMouseClicked(mouseEvent -> {
-            if (playerTurn==0) {
-                showPlayerXTurn();
-            } else {
-                showPlayerOTurn();
-            }
+            
             setPlayerSymbol(b);
             if (b.getText().equals("X")) 
                 b.setStyle("-fx-background-color:#F02A9C;-fx-font-size:40;");
@@ -141,61 +141,25 @@ public class GameController implements Controller, Initializable {
 
     public void resetButton(Button b) {
         playerTurn = 0;
-
-
         b.setStyle(startingColourHex);
-        
         b.setDisable(false);
         b.setText("");
     }
 
     public void setPlayerSymbol(Button b) {
         if (playerTurn == 0) {
-            
             b.setText("X");
             playerTurn = 1;
             
         } else {
-
             b.setText("O");
             playerTurn = 0; 
         }
     }
 
-    private void showPlayerOTurn() {
-        // playerTurn == 0 , player X
-        // playerXtext.setStyle("-fx-text-fill: #000000;");
-        // playerXtext.setFill(Color.BLACK);
-
-        playerXtext.setStyle("-fx-text-fill: #000000;");
-        playerXtext.setFill(Color.RED);
-        playerXtext.setStyle("-fx-font-size: 24px;");
-
-
-        playerOtext.setFill(Color.BLACK);
-        playerOtext.setStyle("-fx-text-fill: #000000;");
-        playerOtext.setStyle("-fx-font-size: 16px;");
-
-    }
-
-    private void showPlayerXTurn() {
-
-        playerOtext.setStyle("-fx-text-fill: #000000;");
-        playerOtext.setFill(Color.RED);
-        playerOtext.setStyle("-fx-font-size: 24px;");
-
-
-        playerXtext.setFill(Color.BLACK);
-        playerXtext.setStyle("-fx-text-fill: #000000;");
-        playerXtext.setStyle("-fx-font-size: 16px;");
-    }
-
     public void checkGameOver() {
         String result = "";
-        // int count = 0;
         for (int i = 1 ; i <= 8; i++) {
-            // int scoreX = 0; // increment
-            // int scoreO = 0; // decrement
 
             result = switch (i) {
                 case 1 -> B1.getText() + B2.getText() + B3.getText();
@@ -212,7 +176,10 @@ public class GameController implements Controller, Initializable {
             if (result.equals("XXX")) {
                 // X won even 
                 playerWon = 0;
-                System.out.println(result);
+                playerXscore++;
+                String s = Integer.toString(playerXscore);
+                XPlayerScore.setText(s);
+
                 GameEndController gec = (GameEndController) controllersList.get("game-end-scene");
                 gec.setPlayerWon();
                 this.scene.setRoot(gec.getPane());
@@ -221,17 +188,16 @@ public class GameController implements Controller, Initializable {
             } else if (result.equals("OOO")) {
                 // 0 won
                 playerWon = 1;
-                System.out.println(result);
+                playerOscore++;
+                String s = Integer.toString(playerOscore);
+                OPlayerScore.setText(s);
+
                 GameEndController gec = (GameEndController) controllersList.get("game-end-scene");
                 gec.setPlayerWon();
                 this.scene.setRoot(gec.getPane());
                 return;
-            } else if (result.equals("TIE")) {
-                playerWon = -1;
-                GameEndController gec = (GameEndController) controllersList.get("game-end-scene");
-                gec.setPlayerWon();
-                this.scene.setRoot(gec.getPane());
             }
+
         }
         checkTied();
     }
@@ -251,19 +217,43 @@ public class GameController implements Controller, Initializable {
         }
     }
 
+    void continueGame() {
+        buttons.forEach(this::resetButton);
+    }
+
+
     @FXML
     void restartGame(ActionEvent event) {
         // default starting is player X
         buttons.forEach(this::resetButton);
+        OPlayerScore.setText("0");
+        XPlayerScore.setText("0");
     }
 
     @FXML
-    void clickButton(ActionEvent event) {
+    void clickButton(Button button, ActionEvent event) {
 
     }
 
     @FXML
     void switchMode(ActionEvent event) {
+        if (mode == 0) {
+            for (Button b: buttons) {
+                if (!b.isDisabled()) {
+                    b.setStyle(switchColourHex);
+                }
+            }
+            mode = 1;
+        }  else if (mode == 1) {
 
+            for (Button b: buttons) {
+                if (!b.isDisabled()) {
+                    b.setStyle(startingColourHex);
+                }
+            }
+            mode = 0;
+        }
     }
+
+
 }

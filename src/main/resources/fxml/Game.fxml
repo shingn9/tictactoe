@@ -38,7 +38,7 @@
             </Lighting>
          </effect>
       </Text>
-      <Button fx:id="switchModeButton" layoutX="59.0" layoutY="581.0" mnemonicParsing="false" onAction="#restartGame" prefHeight="26.0" prefWidth="93.0" text="Switch Mode" />
+      <Button fx:id="switchModeButton" layoutX="59.0" layoutY="581.0" mnemonicParsing="false" onAction="#switchMode" prefHeight="26.0" prefWidth="93.0" text="Switch Mode" />
       <Label fx:id="XPlayerScore" alignment="CENTER" graphicTextGap="0.0" layoutX="96.0" layoutY="80.0" prefHeight="50.0" prefWidth="51.0" text="0" textAlignment="CENTER">
          <font>
             <Font size="40.0" />

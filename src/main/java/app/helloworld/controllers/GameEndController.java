@@ -6,12 +6,20 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.scene.layout.Pane;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 
 import javafx.fxml.Initializable;
 import java.util.*;
 import javafx.event.ActionEvent;
 
+
 public class GameEndController implements Controller {
+
+    @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private Button continueButton;
 
     @FXML
     private Text gameOverText;
@@ -24,7 +32,6 @@ public class GameEndController implements Controller {
 
     private Pane pane;
     private Scene scene;
-    // private Window window;
 
     HashMap<String, Controller> controllersList =  new HashMap<>(); 
     
@@ -34,8 +41,16 @@ public class GameEndController implements Controller {
         GameController gc = (GameController)controllersList.get("game-scene");
         gc.restartGame(event);
         // reset the scene 
-        this.scene.setRoot(controllersList.get("game-scene").getPane());
+        this.scene.setRoot(gc.getPane());
     }
+
+    @FXML
+    void continueGame(ActionEvent event) {
+        GameController gc = (GameController)controllersList.get("game-scene");
+        gc.continueGame();
+        this.scene.setRoot(gc.getPane());
+    }
+
 
     public void setScene(Scene scene){
         this.scene = scene;
@@ -60,27 +75,18 @@ public class GameEndController implements Controller {
         if (gc.getPlayerWon() == 0) {
             // player X
             winner = "Player X has won!";
+            anchorPane.setStyle("-fx-background-color: #ed8cd6"); 
+
         } else if (gc.getPlayerWon() == 1) {
+
             winner = "Player O has won!";
+            anchorPane.setStyle("-fx-background-color: #88d0eb"); 
+
         } else if (gc.getPlayerWon() ==-1) {
-            winner = "Both players are tied!";
+            winner = "Players are tied!";
+            anchorPane.setStyle("-fx-background-color: #a37ff0"); // purple
         }
         mainText.setText(winner);
     }
-
-    // @Override
-    // public void initialize(URL location, ResourceBundle resourceBundle) {
-    //     this.scene.setRoot(controllersList.get("game-end-scene").getPane());
-
-    //     String winner = "";
-
-    //     // if (this.window.getPlayerWon() == 0) {
-    //     //     // player X
-    //     //     winner = "Player X has won!";
-    //     // } else {
-    //     //     winner = "Player O has won!";
-    //     // }
-    //     mainText.setText(winner);
-    // }
 
 }
