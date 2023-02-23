@@ -35,28 +35,22 @@ public class Window {
     }
 
     public void initializeScene() throws Exception {
-        // URL fxmlLoader = getClass().getResource(gameControllerFXML);
-        // FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Game.fxml"));,
-        // Pane root = loader.load();
-        // GameController controller = loader.getController();
-        // controller.setPane(root);
-        // controller.setScene(this.scene);
+
+        // Parent content = loader.load(); 
+        // scene = new Scene(content);
+        // this.scene = new Scene(pane); // set original screen to game scene
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(gameControllerFXML));
-        // Parent content = loader.load(); 
-        // scene = new Scene(content);
-        // Pane pane  = new Pane();
+
+        // this.scene.setRoot(pane);
+
         Pane pane = loader.load(); 
-        // this.scene = new Scene(pane); // set original screen to game scene
-        // GameController controller = loader.getController();
         GameController controller = loader.getController();
         controller.setPane(pane);
-        // this.scene.setRoot(pane);
         controller.setScene(this.scene);
         this.controllersList.put("game-scene", controller);
         controller.setControllersList(this.controllersList);
-
 	}
 
     public void initialiseGameOverScene() throws Exception {
@@ -64,11 +58,9 @@ public class Window {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(gameEndControllerFXML));
         Pane pane = loader.load(); 
-        // this.scene = new Scene(pane);
         GameEndController gameEndController = loader.getController();
         gameEndController.setPane(pane);
         gameEndController.setScene(this.scene);
-        // // gameEndController.setWindow(this);
         this.controllersList.put("game-end-scene", gameEndController);
         gameEndController.setControllersList(this.controllersList);
     }

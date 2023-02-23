@@ -33,7 +33,7 @@ public class GameEndController implements Controller {
     private Pane pane;
     private Scene scene;
 
-    HashMap<String, Controller> controllersList =  new HashMap<>(); 
+    private HashMap<String, Controller> controllersList =  new HashMap<>(); 
     
     @FXML
     void restartGame(ActionEvent event) {
@@ -73,7 +73,7 @@ public class GameEndController implements Controller {
         GameController gc = (GameController)controllersList.get("game-scene");
 
         if (gc.getPlayerWon() == 0) {
-            // player X
+
             winner = "Player X has won!";
             anchorPane.setStyle("-fx-background-color: #ed8cd6"); 
 
@@ -82,7 +82,8 @@ public class GameEndController implements Controller {
             winner = "Player O has won!";
             anchorPane.setStyle("-fx-background-color: #88d0eb"); 
 
-        } else if (gc.getPlayerWon() ==-1) {
+        } else if (gc.getPlayerWon() == -1) {
+
             winner = "Players are tied!";
             anchorPane.setStyle("-fx-background-color: #a37ff0"); // purple
         }

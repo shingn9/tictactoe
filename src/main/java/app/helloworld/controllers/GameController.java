@@ -86,11 +86,10 @@ public class GameController implements Controller, Initializable {
     private Window window;
     private HashMap<String, Controller> controllersList =  new HashMap<>(); 
 
-    final String startingColourHex = "-fx-background-color:#33A9BA;";
+    private final String startingColourHex = "-fx-background-color:#33A9BA;";
 
     // dark background
-    // final String switchColourHex = "-fx-background-color:#25282b;";
-    final String switchColourHex = "-fx-background-color:#f57b42;";
+    private final String switchColourHex = "-fx-background-color:#f57b42;";
 
     private int mode = 0;
     
@@ -109,10 +108,6 @@ public class GameController implements Controller, Initializable {
     public void setPane(Pane pane){
         this.pane = pane;
     }
-
-    public void setWindow(Window window){
-        this.window = window;
-    }  
     
     public void setControllersList(HashMap<String, Controller> controllersList) {
         this.controllersList = controllersList;
