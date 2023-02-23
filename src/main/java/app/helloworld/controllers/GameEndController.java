@@ -1,5 +1,4 @@
 package app.helloworld.controllers;
-import app.helloworld.view.Window;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,10 +7,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 
-import javafx.fxml.Initializable;
 import java.util.*;
 import javafx.event.ActionEvent;
-
 
 public class GameEndController implements Controller {
 
@@ -51,7 +48,6 @@ public class GameEndController implements Controller {
         this.scene.setRoot(gc.getPane());
     }
 
-
     public void setScene(Scene scene){
         this.scene = scene;
     }
@@ -89,5 +85,6 @@ public class GameEndController implements Controller {
         }
         mainText.setText(winner);
     }
+    
 
 }

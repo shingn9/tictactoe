@@ -1,10 +1,6 @@
 package app.helloworld.controllers;
-import app.helloworld.view.Window;
 
 import javafx.event.ActionEvent;
-import javafx.event.*;
-import javafx.animation.*;
-import javafx.util.Duration;
 import javafx.scene.paint.Color;
 
 import javafx.fxml.FXML;
@@ -83,8 +79,8 @@ public class GameController implements Controller, Initializable {
     private Pane pane;
 
     private Scene scene;
-    private Window window;
     private HashMap<String, Controller> controllersList =  new HashMap<>(); 
+    private String gameEndControllerKey = "game-end-scene";
 
     private final String startingColourHex = "-fx-background-color:#33A9BA;";
 
@@ -93,9 +89,6 @@ public class GameController implements Controller, Initializable {
 
     private int mode = 0;
     
-    public GameController() {
-    }
-
     public int getPlayerWon() {
         // if even == X, odd == O
         return this.playerWon;
@@ -122,7 +115,6 @@ public class GameController implements Controller, Initializable {
         buttons = new ArrayList<>(Arrays.asList(B1, B2, B3, B4, B5, B6, B7, B8, B9));
         buttons.forEach(b -> {
             setUpButton(b);
-            System.out.println("hi");
             b.setFocusTraversable(false);
         });
     }
@@ -177,9 +169,7 @@ public class GameController implements Controller, Initializable {
                 String s = Integer.toString(playerXscore);
                 XPlayerScore.setText(s);
 
-                GameEndController gec = (GameEndController) controllersList.get("game-end-scene");
-                gec.setPlayerWon();
-                this.scene.setRoot(gec.getPane());
+                playerWon();
                 return;
 
             } else if (result.equals("OOO")) {
@@ -189,9 +179,7 @@ public class GameController implements Controller, Initializable {
                 String s = Integer.toString(playerOscore);
                 OPlayerScore.setText(s);
 
-                GameEndController gec = (GameEndController) controllersList.get("game-end-scene");
-                gec.setPlayerWon();
-                this.scene.setRoot(gec.getPane());
+                playerWon();
                 return;
             }
 
@@ -199,16 +187,22 @@ public class GameController implements Controller, Initializable {
         checkTied();
     }
 
+    private void playerWon() {
+        GameEndController gec = (GameEndController) controllersList.get(gameEndControllerKey);
+        gec.setPlayerWon();
+        this.scene.setRoot(gec.getPane());
+    }
+
     private void checkTied() {
         int count = 0;
         for (Button b: buttons) {
-            if (b.isDisabled() == true) {
+            if (b.isDisabled()) {
                 count++;
             }
         }
         if (count == 9) {
             playerWon = -1;
-            GameEndController gec = (GameEndController) controllersList.get("game-end-scene");
+            GameEndController gec = (GameEndController) controllersList.get(gameEndControllerKey);
             gec.setPlayerWon();
             this.scene.setRoot(gec.getPane());
         }
@@ -265,7 +259,6 @@ public class GameController implements Controller, Initializable {
         OPlayerScore.setTextFill(Color.web("#ffffff"));
         XPlayerScore.setTextFill(Color.web("#ffffff"));
     }
-
 
     @FXML
     void switchMode(ActionEvent event) {

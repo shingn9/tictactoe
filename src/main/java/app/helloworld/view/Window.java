@@ -4,25 +4,19 @@ import app.helloworld.controllers.GameEndController;
 import app.helloworld.controllers.Controller;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.*;
 import javafx.scene.layout.Pane;
-import javafx.fxml.FXML;
-import java.net.URL;
-
-import javafx.scene.paint.Color;
 
 public class Window {
 
     private final String gameControllerFXML = "/fxml/Game.fxml";
     private final String gameEndControllerFXML = "/fxml/GameEnd.fxml";
     private Scene scene;
-
+    private String gameEndControllerKey = "game-end-scene";
+    private String gameControllerKey = "game-scene";
+    
     private HashMap<String, Controller> controllersList =  new HashMap<>();
 
     public Window() throws Exception {
@@ -31,7 +25,7 @@ public class Window {
         initializeScene();
         initialiseGameOverScene();
         
-        this.scene.setRoot(controllersList.get("game-scene").getPane());
+        this.scene.setRoot(controllersList.get(gameControllerKey).getPane());
     }
 
     public void initializeScene() throws Exception {
@@ -49,7 +43,7 @@ public class Window {
         GameController controller = loader.getController();
         controller.setPane(pane);
         controller.setScene(this.scene);
-        this.controllersList.put("game-scene", controller);
+        this.controllersList.put(gameControllerKey, controller);
         controller.setControllersList(this.controllersList);
 	}
 
@@ -61,7 +55,7 @@ public class Window {
         GameEndController gameEndController = loader.getController();
         gameEndController.setPane(pane);
         gameEndController.setScene(this.scene);
-        this.controllersList.put("game-end-scene", gameEndController);
+        this.controllersList.put(gameEndControllerKey, gameEndController);
         gameEndController.setControllersList(this.controllersList);
     }
 
